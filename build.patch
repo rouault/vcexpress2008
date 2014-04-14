@@ -1,0 +1,48 @@
+Index: ogr/ogrsf_frmts/makefile.vc
+===================================================================
+--- ogr/ogrsf_frmts/makefile.vc	(révision 27180)
++++ ogr/ogrsf_frmts/makefile.vc	(copie de travail)
+@@ -219,8 +219,7 @@
+ 	for %d in ( $(DIRLIST) ) do \
+ 		cd %d \
+ 		&& $(MAKE) /f makefile.vc \
+-		&& cd .. \
+-		|| exit 1
++		&& cd ..
+ 
+ 	lib /out:ogrsf_frmts.lib generic\*.obj shape\*.obj ntf\*.obj \
+ 				 sdts\*.obj s57\*.obj tiger\*.obj gml\*.obj \
+@@ -256,11 +255,13 @@
+ 
+ plugindirs:
+ 	@echo plugins: $(PLUGINDIRLIST)
++
++aplugindirs:
++	@echo plugins: $(PLUGINDIRLIST)
+         -for %d in ( $(PLUGINDIRLIST) ) do \
+                 cd %d \
+                 && $(MAKE) /f makefile.vc plugin \
+-                && cd .. \
+-                || exit 1
++                && cd .. 
+ 
+ clean:
+ 	-del ogrsf_frmts.lib
+Index: frmts/makefile.vc
+===================================================================
+--- frmts/makefile.vc	(révision 27180)
++++ frmts/makefile.vc	(copie de travail)
+@@ -174,10 +174,11 @@
+ 	for %d in ( $(DIRLIST) ) do \
+ 		cd %d \
+ 		&& $(MAKE) /f makefile.vc \
+-		&& cd .. \
+-		|| exit 1
++		&& cd ..
+ 
+ plugindirs:
++	@echo plugins: $(PLUGINDIRLIST)
++aplugindirs:
+ 	-for %d in ( $(PLUGINDIRLIST) ) do \
+ 		cd %d \
+ 		&& $(MAKE) /f makefile.vc plugin \

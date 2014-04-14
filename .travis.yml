@@ -1,0 +1,55 @@
+# This is the config file for building GDAL and running its autotest suite
+# with Travis-ci.org
+
+language: cpp
+
+compiler:
+  - gcc
+
+before_install:
+  - export CC=cl
+  - sudo add-apt-repository -y ppa:ubuntu-wine/ppa
+  - sudo apt-get update -qq
+  - sudo apt-get install wine wget p7zip-full cabextract
+  - wget "http://go.microsoft.com/fwlink/?LinkId=104679" -O VC.iso
+  - mkdir /tmp/vc
+  - 7z x VC.iso -o/tmp/vc
+  - cabextract /tmp/vc/VCExpress/Ixpvc.exe -d /tmp/vc/VCExpress
+  - wine msiexec /i /tmp/vc/VCExpress/vs_setup.msi  VSEXTUI=1 ADDLOCAL=ALL REBOOT=ReallySuppress /qn
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BLD-common.0.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BLD-common.1.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BLD-common.2.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BLD_X86-common.0.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BIN-x86.0.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_MDAC_BLD_X86-common.0.cab
+  - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_MDAC_BLD-common.0.cab
+  - mkdir tmp
+  - cabextract -dtmp *.cab
+  - for i in tmp/*; do mv $i `echo $i | sed "s/\(.*\)\..*/\1/" | sed "s/\(.*\)_\(.*\)/\1\.\2/"`; done
+  - mkdir ~/.wine/drive_c/psdk
+  - mv tmp/* ~/.wine/drive_c/psdk
+#  - find ~/.wine/drive_c
+  - git clone --depth=50 --branch=trunk git://github.com/rouault/gdal.git gdal
+  - mv gdal ~/.wine/drive_c
+  - cp build.bat /tmp
+  - cp build.patch /tmp
+  - cd ~/.wine/drive_c/gdal/gdal
+  - patch -p0 < /tmp/build.patch
+
+install:
+  - wine cmd /c /tmp/build.bat
+
+script:
+  - echo "yes"
+
+notifications:
+#  email:
+#    recipients:
+#      - gdal-commits@lists.osgeo.org
+
+#  irc:
+#    channels:
+#      - "irc.freenode.org#gdal"
+#    use_notice: true
+#    on_success: change
+
