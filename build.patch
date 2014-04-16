@@ -1,3 +1,16 @@
+Index: frmts/jpeg/libjpeg12/makefile.vc
+===================================================================
+--- frmts/jpeg/libjpeg12/makefile.vc   (révision 27183)
++++ frmts/jpeg/libjpeg12/makefile.vc   (copie de travail)
+@@ -20,6 +20,8 @@
+    xcopy /D  /Y *.obj ..\..\o
+ 
+ jcapimin12.c:  ../libjpeg/jcapimin.c
++
++_jcapimin12.c: ../libjpeg/jcapimin.c
+    xcopy /Y ..\libjpeg\*.h
+    xcopy /Y jmorecfg.h.12 jmorecfg.h
+    xcopy /Y ..\libjpeg\*.c
 Index: ogr/ogrsf_frmts/makefile.vc
 ===================================================================
 --- ogr/ogrsf_frmts/makefile.vc	(révision 27180)
