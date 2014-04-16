@@ -11,7 +11,7 @@ before_install:
   - sudo add-apt-repository -y ppa:ubuntu-wine/ppa
   - sudo apt-get update -qq
 # We need wine1.4 to be able to run nmake.exe. wine1.6 or 1.7 does not work
-  - sudo apt-get install wine1.4 wget p7zip-full cabextract
+  - sudo apt-get install wine1.4 wget p7zip-full cabextract unzip
   - wget "http://go.microsoft.com/fwlink/?LinkId=104679" -O VC.iso
   - mkdir /tmp/vc
   - 7z x VC.iso -o/tmp/vc
@@ -24,6 +24,8 @@ before_install:
   - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_Core_BIN-x86.0.cab
   - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_MDAC_BLD_X86-common.0.cab
   - wget http://download.microsoft.com/download/a/5/f/a5f0d781-e201-4ab6-8c6a-9bb4efed1e1a/PSDK-SDK_MDAC_BLD-common.0.cab
+  - wget "http://www.gisinternals.com/sdk/Download.aspx?file=release-1500-dev.zip" -O /tmp/release-1500-dev.zip
+  - unzip /tmp/release-1500-dev.zip release-1500/* -d ~/.wine/drive_c
   - mkdir tmp
   - cabextract -dtmp *.cab
   - for i in tmp/*; do mv $i `echo $i | sed "s/\(.*\)\..*/\1/" | sed "s/\(.*\)_\(.*\)/\1\.\2/"`; done
@@ -34,6 +36,7 @@ before_install:
   - mv gdal ~/.wine/drive_c
   - cp build.bat /tmp
   - cp build.patch /tmp
+  - cp nmake.local ~/.wine/drive_c/gdal/gdal
   - cd ~/.wine/drive_c/gdal/gdal
   - cd frmts/jpeg/libjpeg12
   - cp ../libjpeg/*.h .
