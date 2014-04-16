@@ -65,3 +65,9 @@ FREEXL_LIBS = c:\release-1500\lib\freexl_i.lib
 LIBKML_DIR=c:\release-1500
 LIBKML_INCLUDE=-Ic:\release-1500\include
 LIBKML_LIBS=c:\release-1500\lib\libkmlbase.lib c:\release-1500\lib\libkmlconvenience.lib c:\release-1500\lib\libkmldom.lib c:\release-1500\lib\libkmlengine.lib c:\release-1500\lib\libkmlregionator.lib c:\release-1500\lib\libkmlxsd.lib c:\release-1500\lib\libexpat.lib c:\release-1500\lib\zdll.lib
+
+PG_INC_DIR = c:\release-1500\include
+PG_LIB = c:\release-1500\lib\libpqdll.lib wsock32.lib
+
+MYSQL_INC_DIR=c:\release-1500\include
+MYSQL_LIB=c:\release-1500\lib\libmysql.lib advapi32.lib
