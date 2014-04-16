@@ -38,7 +38,7 @@ before_install:
   - cd frmts/jpeg/libjpeg12
   - cp ../libjpeg/*.h .
   - cp jmorecfg.h.12 jmorecfg.h
-  - cp ../libjpeg/*.c
+  - cp ../libjpeg/*.c .
   - mv jcapimin.c jcapimin12.c
   - mv jcapistd.c jcapistd12.c
   - mv jccoefct.c jccoefct12.c
